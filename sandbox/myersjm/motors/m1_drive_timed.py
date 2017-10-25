@@ -59,26 +59,72 @@ Authors: David Fisher and Jessica Myers.
 #   Note: To repeat again, in later modules you will learn different (better) ways to travel a given distance using
 #     motor encoders, so just make a simple rough approximation here, since later we'll do it better in a different way.
 #
-# TODO: 3. Copy the content of the /examples/motors/drive_input_speed.py program and place it below these comments.
+# DONE: 3. Copy the content of the /examples/motors/drive_input_speed.py program and place it below these comments.
 #   Change the initial print and speak commands to reflect this module, like this...
 #    print("--------------------------------------------")
 #    print("  Timed Driving")
 #    print("--------------------------------------------")
 #    ev3.Sound.speak("Timed Driving").wait()
-# TODO: 4. Change the input questions from:
+#!/usr/bin/env python3
+"""
+This demo lets you see how to use an input prompt to test different drive speeds.
+
+Author: David Fisher.
+"""
+
+import ev3dev.ev3 as ev3
+import time
+
+
+def main():
+    print("--------------------------------------------")
+    print("  Timed Driving")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Timed Driving").wait()
+
+    # Connect two large motors on output ports B and C
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+    # Check that the motors are actually connected
+    assert left_motor.connected
+    assert right_motor.connected
+
+    time_s = 1  # Any value other than 0.
+    while time_s != 0:
+        left_sp = int(input("Enter a speed (0 to 900 dps):"))
+        right_sp = int(input("Enter a speed (0 to 900 dps):"))
+        time_s = int(input("Distance to travel (inches):"))
+        if time_s !=0 and left_sp != 0 and right_sp!=0:
+            left_motor.run_forever(speed_sp=left_sp)
+            right_motor.run_forever(speed_sp=right_sp)
+            time.sleep(time_s)
+            left_motor.stop()
+            right_motor.stop(stop_action="brake")
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
+
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()
+
+# DONE: 4. Change the input questions from:
 #   Enter a speed for the left motor (0 to 900 dps):
 #   Enter a speed for the right motor (0 to 900 dps):
 #   Enter a time to drive (seconds):
 # to:
 #   Enter a speed (0 to 900 dps):
 #   Distance to travel (inches):
-# TODO: 5. Write the code necessary to make the robot drive at that speed going roughly that distance.
+# DONE: 5. Write the code necessary to make the robot drive at that speed going roughly that distance.
 #   Note, in this module, you are REQUIRED to use the pattern...
 #      run_forever()
 #      time.sleep(some_amount)
 #      stop()
 #   You may NOT use the advanced motor commands at this time like: run_to_abs_pos, run_to_rel_pos, or run_timed.
-# TODO: 6. Modify the program so that it will exit immediately if the answer to   any   question is 0.
+# DONE: 6. Modify the program so that it will exit immediately if the answer to   any   question is 0.
 # TODO: 7. Formally test your work. When you think you have the problem complete run these tests to be sure:
 #   200 dps 24 inches (make sure it drives within 6 inches of the target distance)
 #   400 dps 24 inches (make sure it drives within 6 inches of the target distance)
