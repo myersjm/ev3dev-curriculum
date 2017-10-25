@@ -40,7 +40,7 @@ Authors: David Fisher and Jessica Myers.
 #     800 degrees / second  -->  traveled 44.25 inches  -->  8.85 inches / second
 #     900 degrees / second  -->  traveled 44.5 inches  -->  8.9 inches / second (probably no faster than 800)
 #
-# TODO: 3. Make an equation
+# DONE: 3. Make an equation
 #   Derive from that information a way to convert a given degrees per second speed into an inches / second speed.
 #     If you plotted the data with degrees / second on the x axis and inches per second on the y axis you would find the
 #       data is fairly linear, so you could use a    y = m * x + b   line approximation formula.  Excel could even help
@@ -48,6 +48,7 @@ Authors: David Fisher and Jessica Myers.
 #       that would roughly fit most of your data.  Put your value for m below and think about if it most fits:
 #
 #       speed_in_inches_per_second = m * speed_in_degrees_per_second + 0
+#                              m = .01099
 #
 #     Eventually your goal is to make an equation that will allow users to input any distance in inches and any speed in
 #     degrees per second, then output the time needed to drive the correct distance at that speed.  So eventually you
