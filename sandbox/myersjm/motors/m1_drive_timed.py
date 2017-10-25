@@ -48,7 +48,7 @@ Authors: David Fisher and Jessica Myers.
 #       that would roughly fit most of your data.  Put your value for m below and think about if it most fits:
 #
 #       speed_in_inches_per_second = m * speed_in_degrees_per_second + 0
-#                              m = .01099
+#                              m = .01099  in/degrees
 #
 #     Eventually your goal is to make an equation that will allow users to input any distance in inches and any speed in
 #     degrees per second, then output the time needed to drive the correct distance at that speed.  So eventually you
@@ -93,13 +93,17 @@ def main():
     time_s = 1  # Any value other than 0.
     while time_s != 0:
         left_sp = int(input("Enter a speed (0 to 900 dps):"))
-        right_sp = int(input("Enter a speed (0 to 900 dps):"))
-        time_s = int(input("Distance to travel (inches):"))
-        if time_s !=0 and left_sp != 0 and right_sp!=0:
+        right_sp = left_sp
+        distance = int(input("Distance to travel (inches):"))
+
+        speed = left_sp * .01099
+        running_time = distance / speed
+
+        if distance != 0 and left_sp != 0:
             left_motor.run_forever(speed_sp=left_sp)
-            right_motor.run_forever(speed_sp=right_sp)
-            time.sleep(time_s)
-            left_motor.stop()
+            right_motor.run_forever(speed_sp=left_sp)
+            time.sleep(running_time)
+            left_motor.stop(stop_action="brake")
             right_motor.stop(stop_action="brake")
 
     print("Goodbye!")
