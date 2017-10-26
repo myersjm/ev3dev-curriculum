@@ -44,3 +44,6 @@ class Snatch3r(object):
             self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
             self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
             ev3.Sound.beep().wait()
+
+    def turn_degrees(self, degrees_to_turn, turn_speed_sp):
+        
