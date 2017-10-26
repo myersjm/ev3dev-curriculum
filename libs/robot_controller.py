@@ -20,11 +20,29 @@ class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
     
     # TODO: Implement the Snatch3r class as needed when working the sandox exercises
-    # (and delete these comments) init
 
     def __init__(self):
-        
-    def drive_timed(self):
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
-    def drive_encoders(self):
+    def drive_around(self, speed, distance,):
+        #using encoder
+        #Take in distance in inches, speed in degrees per seconds
 
+        # Check that the motors are actually connected
+        assert self.left_motor.connected
+        assert self.right_motor.connected
+
+        time_s = 1  # Any value other than 0.
+        while time_s != 0:
+            position = 90 * distance
+
+            if distance != 0 and speed != 0:
+                self.left_motor.run_to_rel_pos(speed_sp=speed, position_sp=position,
+                                               stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+                self.right_motor.run_to_rel_pos(speed_sp=speed, position_sp=position,
+                                                stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+                self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+                self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+                ev3.Sound.beep().wait()
