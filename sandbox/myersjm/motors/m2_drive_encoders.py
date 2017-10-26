@@ -31,13 +31,13 @@ Authors: David Fisher and Jessica Myers
 
 # DONE: 5. Make sure the beep happens AFTER the motors stop.  Use the wait_while command to block code execution.
 
-# TODO: 6. Formally test your work. When you think you have the problem complete run these tests:
-#   200 dps 24 inches (make sure it drives within 2 inches of the target distance)
-#   400 dps 24 inches (make sure it drives within 2 inches of the target distance)
-#   800 dps 24 inches (make sure it drives within 2 inches of the target distance)
-#   400 dps 12 inches (make sure it drives within 1 inches of the target distance)
-#   400 dps 36 inches (make sure it drives within 3 inches of the target distance)
-#   400 dps -36 inches (make sure it drives within 3 inches of the target distance)
+# DONE: 6. Formally test your work. When you think you have the problem complete run these tests:
+#   200 dps 24 inches (make sure it drives within 2 inches of the target distance) 23.5
+#   400 dps 24 inches (make sure it drives within 2 inches of the target distance) 24.5
+#   800 dps 24 inches (make sure it drives within 2 inches of the target distance) 24
+#   400 dps 12 inches (make sure it drives within 1 inches of the target distance) 12
+#   400 dps 36 inches (make sure it drives within 3 inches of the target distance) 36
+#   400 dps -36 inches (make sure it drives within 3 inches of the target distance) -36 within 1/4th inch
 # Add more tests as you see fit.  Ideally you should be +/- 10% of the target goal this time.
 
 # TODO: 7. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
