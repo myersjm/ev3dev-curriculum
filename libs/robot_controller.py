@@ -25,7 +25,7 @@ class Snatch3r(object):
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
-    def drive_around(self, speed, distance,):
+    def drive_inches(self, inches_target, speed_deg_per_second):
         #using encoder
         #Take in distance in inches, speed in degrees per seconds
 
@@ -35,12 +35,12 @@ class Snatch3r(object):
 
         time_s = 1  # Any value other than 0.
         while time_s != 0:
-            position = 90 * distance
+            position = 90 * inches_target
 
-            if distance != 0 and speed != 0:
-                self.left_motor.run_to_rel_pos(speed_sp=speed, position_sp=position,
+            if inches_target != 0 and speed_deg_per_second != 0:
+                self.left_motor.run_to_rel_pos(speed_sp=speed_deg_per_second, position_sp=position,
                                                stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-                self.right_motor.run_to_rel_pos(speed_sp=speed, position_sp=position,
+                self.right_motor.run_to_rel_pos(speed_sp=speed_deg_per_second, position_sp=position,
                                                 stop_action=ev3.Motor.STOP_ACTION_BRAKE)
 
                 self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)

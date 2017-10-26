@@ -14,7 +14,7 @@ Authors: David Fisher and Jessica Myers.
 #   That folder path is special on your robot because it is set as the PYTHONPATH (done within the .bashrc file)
 #   Normally you can't just use a module in some random folder, but the libs folder has been setup special.
 
-# TODO: 3. Have everyone talk about this problem together then pick one team member to modify libs/robot_controller.py
+# DONE: 3. Have everyone talk about this problem together then pick one team member to modify libs/robot_controller.py
 # as necessary to make the code below perform the same task as the prior module. As mentioned in the top doc-string for
 # the file, you may not modify the code below.  Warning, make sure you UPLOAD the library to the robot before running
 # this module.
