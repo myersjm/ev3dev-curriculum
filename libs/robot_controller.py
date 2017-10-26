@@ -46,4 +46,15 @@ class Snatch3r(object):
             ev3.Sound.beep().wait()
 
     def turn_degrees(self, degrees_to_turn, turn_speed_sp):
+        assert self.left_motor.connected
+        assert self.right_motor.connected
+        if degrees_to_turn > 0 :  #left turn
+            self.left_motor.speed_sp = -turn_speed_sp
+            self.right_motor.speed_sp = turn_speed_sp
+        if degrees_to_turn < 0 :  #right turn
+            self.left_motor.speed_sp = turn_speed_sp
+            self.right_motor.speed_sp = -turn_speed_sp
+
+
+
         
