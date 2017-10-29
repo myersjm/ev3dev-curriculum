@@ -48,13 +48,23 @@ class Snatch3r(object):
     def turn_degrees(self, degrees_to_turn, turn_speed_sp):
         assert self.left_motor.connected
         assert self.right_motor.connected
-        if degrees_to_turn > 0 :  #left turn
+
+        if degrees_to_turn > 0:            #left turn
             self.left_motor.speed_sp = -turn_speed_sp
             self.right_motor.speed_sp = turn_speed_sp
-        if degrees_to_turn < 0 :  #right turn
+        if degrees_to_turn < 0:             #right turn
             self.left_motor.speed_sp = turn_speed_sp
             self.right_motor.speed_sp = -turn_speed_sp
 
+        position = XXXX * degrees_to_turn
+        # degrees * x in/degrees
+        # =? 2pir radians 180 degrees
+        # maybe it is theta/360 * the circumference
+
+        self.left_motor.run_to_rel_pos(position_sp=position, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.right_motor.run_to_rel_pos(position_sp=position, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
 
-        
