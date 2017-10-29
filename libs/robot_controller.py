@@ -56,10 +56,10 @@ class Snatch3r(object):
             self.left_motor.speed_sp = turn_speed_sp
             self.right_motor.speed_sp = -turn_speed_sp
 
-        position = XXXX * degrees_to_turn
+        position = 90 * degrees_to_turn
         # degrees * x in/degrees
         # =? 2pir radians 180 degrees
-        # maybe it is theta/360 * the circumference
+        # maybe it is theta/360 * the circumference 4 in.
 
         self.left_motor.run_to_rel_pos(position_sp=position, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.right_motor.run_to_rel_pos(position_sp=position, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
