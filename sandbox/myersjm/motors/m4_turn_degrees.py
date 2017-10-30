@@ -30,13 +30,13 @@ Authors: David Fisher and Jessica Myers.
 #   You will have to experimentally determine the formula for accurate position_sp turn amounts.
 
 
-# TODO: 4. Individually implement the code here to use your turn_degrees library method.
+# DONE: 4. Individually implement the code here to use your turn_degrees library method.
 #   Modify the code to ask the user how many degrees they would like to turn
 #   Ask the user what speed they would like to use for the turn (0 to 900 degrees per second).
 #   Beep after the turn is complete via a beep in this module (tests to make sure the library is blocking)
 #   When the library method is complete have all team members VCS update and test using their own m4_turn_degrees.py
 
-# TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
+# DONE: 5. Formally test your work. When you think you have the problem complete run these tests:
 #     45 degrees turns left 45 degrees
 #    -45 degrees turn right 45 degrees putting you back where you started
 #     90 degrees turns left 90 degrees

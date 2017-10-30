@@ -49,30 +49,12 @@ class Snatch3r(object):
         assert self.left_motor.connected
         assert self.right_motor.connected
 
-        #if degrees_to_turn > 0:            #left turn
-            #self.left_motor.speed_sp = -turn_speed_sp
-            #self.right_motor.speed_sp = turn_speed_sp
-           # left_speed = -turn_speed_sp
-            #right_speed = turn_speed_sp
-        #if degrees_to_turn < 0:             #right turn
-            #self.left_motor.speed_sp = turn_speed_sp
-            #self.right_motor.speed_sp = -turn_speed_sp
-          #  left_speed = turn_speed_sp
-         #   right_speed = -turn_speed_sp
-
-        #position = degrees_to_turn * .01111
         if degrees_to_turn > 0:
             left_position = degrees_to_turn * -5.3
             right_position = degrees_to_turn * 5.3
         if degrees_to_turn < 0:
-            left_position = degrees_to_turn * 5.3
-            right_position = degrees_to_turn * -5.3
-        # degrees * x in/degrees
-        # =? 2pir radians 180 degrees
-        # maybe it is theta/360 * the circumference 4 in.
-
-        #self.left_motor.run_to_rel_pos(speed_sp=left_speed, position_sp=position, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        #self.right_motor.run_to_rel_pos(speed_sp=right_speed, position_sp=position, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+            left_position = degrees_to_turn * -5.3
+            right_position = degrees_to_turn * 5.3
 
         self.left_motor.run_to_rel_pos(speed_sp=turn_speed_sp, position_sp=left_position, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.right_motor.run_to_rel_pos(speed_sp=turn_speed_sp, position_sp=right_position, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
