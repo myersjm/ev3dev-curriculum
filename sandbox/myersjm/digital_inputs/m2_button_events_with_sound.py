@@ -56,14 +56,13 @@ def main():
     btn.on_left = handle_left_button
     btn.on_right = handle_right_button
 
-    # TODO: 5. Note #4 is lower (this is TO DO #5 which you should do after #4).
+    # DONE: 5. Note #4 is lower (this is TO DO #5 which you should do after #4).
     # Add a lambda callback for on_backspace.  The syntax of lambda is:
     #   btn.on_backspace = lamdba predefined_inputs: function_name(parameters)
     # You will need to change the predefined_inputs, function_name, and parameters from that syntax template.
     # Using lambda call the function handle_shutdown passing in the state and dc
     # Note: the function handle_shutdown does not exist yet, you will write it in todo6.
-    btn.on_backspace = lambda: handle_shutdown(button_state, dc)
-    """RIGHT HERE^^^ Not sure if button_state is right."""
+    btn.on_backspace = lambda button_state: handle_shutdown(dc)
 
     while dc.running:
         btn.process()  # This command is VERY important when using button callbacks!
@@ -123,7 +122,7 @@ def handle_right_button(button_state):
     else:
         print("Right button was released")
 
-# TODO: 6. Implement the handle_shutdown function.
+# DONE: 6. Implement the handle_shutdown function.
 #   Function signature should be:
 #       def handle_shutdown(button_state, dc):
 #   When the button is pressed (state is True)
