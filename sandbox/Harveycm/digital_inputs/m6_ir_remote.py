@@ -70,15 +70,15 @@ def main():
     #btn.on_backspace = lambda button_state: handle_shutdown(dc)
 
     rc1 = ev3.RemoteControl(channel=1)
-    rc1.on_red_up = lambda button_state, robot: left_wheel_forwards(button_state, robot)
-    rc1.on_red_down = lambda button_state, robot: left_wheel_backwards(button_state, robot)
-    rc1.on_blue_up = lambda button_state, robot: right_wheel_forwards(button_state, robot)
-    rc1.on_blue_down = lambda button_state, robot: right_wheel_forwards(button_state, robot)
+    rc1.on_red_up = lambda state: left_wheel_forwards(state, robot)
+    rc1.on_red_down = lambda state: left_wheel_backwards(state, robot)
+    rc1.on_blue_up = lambda state: right_wheel_forwards(state, robot)
+    rc1.on_blue_down = lambda state: right_wheel_forwards(state, robot)
 
     rc2 = ev3.RemoteControl(channel=2)
-    rc2.on_red_up = lambda button_state: handle_arm_up_button(robot)
-    rc2.on_red_down = lambda button_state: handle_arm_down_button(robot)
-    rc2.on_blue_up = lambda button_state: handle_calibrate_button(robot)
+    rc2.on_red_up = lambda state: handle_arm_up_button(state, robot)
+    rc2.on_red_down = lambda state: handle_arm_down_button(state, robot)
+    rc2.on_blue_up = lambda state: handle_calibrate_button(state, robot)
 
 
 
@@ -115,6 +115,7 @@ def left_wheel_forwards(button_state, robot):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         robot.left_motor.run_forever(speed_sp=600, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+    robot.left_motor.stop()
 
 
 def left_wheel_backwards(button_state, robot):
@@ -122,21 +123,21 @@ def left_wheel_backwards(button_state, robot):
          ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
          robot.left_motor.run_forever(speed_sp=-600, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
      ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
-
+     robot.left_motor.stop()
 
 def right_wheel_forwards(button_state, robot):
     if button_state:
          ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
          robot.right_motor.run_forever(speed_sp=600, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+    robot.right_motor.stop()
 
-
-def left_wheel_backwards(button_state, robot):
+def right_wheel_backwards(button_state, robot):
     if button_state:
          ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
          robot.right_motor.run_forever(speed_sp=-600, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
-
+    robot.right_motor.stop()
 
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
