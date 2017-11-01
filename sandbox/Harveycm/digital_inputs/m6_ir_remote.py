@@ -57,6 +57,8 @@ def main():
     ev3.Leds.all_off()  # Turn the leds off
     robot = robo.Snatch3r()
     dc = DataContainer()
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
     # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
@@ -65,10 +67,10 @@ def main():
 
 
     rc1= ev3.RemoteControl(channel=1)
-    rc1.red_up = right_wheel_forwards
-    rc1.red_down = right_wheel_backwards
-    rc1.blue_up = left_wheel_forwards
-    rc1.blue_down = left_wheel_backwards
+    rc1.red_up = left_wheel_forwards()
+    rc1.red_down = left_wheel_backwards()
+    rc1.blue_up = right_wheel_forwards()
+    rc1.blue_down = right_wheel_backwards()
 
     rc2 = ev3.RemoteControl(channel=2)
     rc2.red_up = handle_arm_up_button()
@@ -103,8 +105,11 @@ def main():
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
 # TODO: 6. Implement the IR handler callbacks handlers.
-def right_wheel_forwards(button_state, motor):
+def left_wheel_forwards(button_state, left_motor):
     if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        left_motor.run_forever(speed_sp=600, stop_action=stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
 
 def right_wheel_backwards(button_state, robot):
     if button_state:
