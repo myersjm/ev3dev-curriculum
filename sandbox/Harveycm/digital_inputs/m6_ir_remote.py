@@ -62,22 +62,23 @@ def main():
     assert left_motor.connected
     assert right_motor.connected
 
+
     # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
 
+    #btn.on_backspace = lambda button_state: handle_shutdown(dc)
 
-
-    rc1= ev3.RemoteControl(channel=1)
-    rc1.red_up = left_wheel_forwards()
-    rc1.red_down = left_wheel_backwards()
-    rc1.blue_up = right_wheel_forwards()
-    rc1.blue_down = right_wheel_backwards()
+    rc1 = ev3.RemoteControl(channel=1)
+    rc1.on_red_up = lambda button_state, robot: left_wheel_forwards(button_state, robot)
+    rc1.on_red_down = lambda button_state, robot: left_wheel_backwards(button_state, robot)
+    rc1.on_blue_up = lambda button_state, robot: right_wheel_forwards(button_state, robot)
+    rc1.on_blue_down = lambda button_state, robot: right_wheel_forwards(button_state, robot)
 
     rc2 = ev3.RemoteControl(channel=2)
-    rc2.red_up = handle_arm_up_button()
-    rc2.red_down = handle_arm_down_button()
-    rc2.blue_up = handle_calibrate_button()
+    rc2.on_red_up = lambda button_state: handle_arm_up_button(robot)
+    rc2.on_red_down = lambda button_state: handle_arm_down_button(robot)
+    rc2.on_blue_up = lambda button_state: handle_calibrate_button(robot)
 
 
 
@@ -107,21 +108,34 @@ def main():
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
 # TODO: 6. Implement the IR handler callbacks handlers.
-def left_wheel_forwards(button_state, left_motor):
-    if button_state:
-        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-        left_motor.run_forever(speed_sp=600, stop_action=stop_action=ev3.Motor.STOP_ACTION_BRAKE)
 
-
-def right_wheel_backwards(button_state, robot):
-    if button_state:
 
 def left_wheel_forwards(button_state, robot):
     if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        robot.left_motor.run_forever(speed_sp=600, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+
+
+def left_wheel_backwards(button_state, robot):
+     if button_state:
+         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+         robot.left_motor.run_forever(speed_sp=-600, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+
+
+def right_wheel_forwards(button_state, robot):
+    if button_state:
+         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+         robot.right_motor.run_forever(speed_sp=600, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+
 
 def left_wheel_backwards(button_state, robot):
     if button_state:
-
+         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+         robot.right_motor.run_forever(speed_sp=-600, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
 
 
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
