@@ -74,35 +74,35 @@ def main():
     #   .on_red_down  to call handle_red_down_1  (that exist already) with state and dc as parameters
     #   .on_blue_up   to call handle_blue_up_1   (that exist already) with state and dc as parameters
     #   .on_blue_down to call handle_blue_down_1 (that exist already) with state and dc as parameters
-    channel1 = ev3.RemoteControl
-    channel1.on_red_up = lambda button_state: handle_red_up_1(dc)
-    channel1.on_red_down = lambda button_state: handle_red_down_1(dc)
-    channel1.on_blue_up = lambda button_state: handle_blue_up_1(dc)
-    channel1.on_blue_down = lambda button_state: handle_blue_down_1(dc)
+    channel1 = ev3.RemoteControl(channel=1)
+    channel1.on_red_up = lambda button_state: handle_red_up_1(button_state, dc)
+    channel1.on_red_down = lambda button_state: handle_red_down_1(button_state, dc)
+    channel1.on_blue_up = lambda button_state: handle_blue_up_1(button_state, dc)
+    channel1.on_blue_down = lambda button_state: handle_blue_down_1(button_state, dc)
 
     # DONE: 5. Create remote control objects for channels 2, 3, and 4. Add lambda callbacks for on_red_up to each one:
     #   Channel 2's .on_red_up should call handle_red_up_2 (that exist already) with state and dc as parameters
     #   Channel 3's .on_red_up should call handle_red_up_3 (that exist already) with state and dc as parameters
     #   Channel 4's .on_red_up should call handle_red_up_4 (that exist already) with state and dc as parameters
-    channel2 = ev3.RemoteControl
-    channel2.on_red_up = lambda button_state: handle_red_up_2(dc)
+    channel2 = ev3.RemoteControl(channel=2)
+    channel2.on_red_up = lambda button_state: handle_red_up_2(button_state, dc)
 
-    channel3 = ev3.RemoteControl
-    channel3.on_red_up = lambda button_state: handle_red_up_3(dc)
+    channel3 = ev3.RemoteControl(channel=3)
+    channel3.on_red_up = lambda button_state: handle_red_up_3(button_state, dc)
 
-    channel4 = ev3.RemoteControl
-    channel4.on_red_up = lambda button_state: handle_red_up_4(dc)
+    channel4 = ev3.RemoteControl(channel=4)
+    channel4.on_red_up = lambda button_state: handle_red_up_4(button_state, dc)
 
     # Buttons on EV3
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     while dc.running:
-        # TODO: 4. Call the .process() method on your channel 1 RemoveControl object, then review and run your code.
+        # DONE: 4. Call the .process() method on your channel 1 RemoveControl object, then review and run your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
         channel1.process()
 
-        # TODO: 6. Call the .process() method on your channel 2 - 4 RemoveControl objects and demo your code.
+        # DONE: 6. Call the .process() method on your channel 2 - 4 RemoveControl objects and demo your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
         channel2.process()
         channel3.process()
