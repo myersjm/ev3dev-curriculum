@@ -21,8 +21,8 @@ Which will probably not require you to type the password since sudo was just run
 
 BTW chvt means CHange the Virtual Terminal, and 86ing something means to kick it out.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Jessica Myers.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -69,16 +69,38 @@ def main():
     display_image(dc.lcd_screen, dc.eyes)  # Display an image on the EV3 screen
     ev3.Sound.speak("I R events with the Screen").wait()
 
-    # TODO: 3. Create a remote control object for channel 1. Add lambda callbacks for:
+    # DONE: 3. Create a remote control object for channel 1. Add lambda callbacks for:
     #   .on_red_up    to call handle_red_up_1    (that exist already) with state and dc as parameters
     #   .on_red_down  to call handle_red_down_1  (that exist already) with state and dc as parameters
     #   .on_blue_up   to call handle_blue_up_1   (that exist already) with state and dc as parameters
     #   .on_blue_down to call handle_blue_down_1 (that exist already) with state and dc as parameters
+    channel1 = ev3.RemoteControl
+    channel1.on_red_up = lambda button_state: handle_red_up_1(dc)
+    channel1.on_red_down = lambda button_state: handle_red_down_1(dc)
+    channel1.on_blue_up = lambda button_state: handle_blue_up_1(dc)
+    channel1.on_blue_down = lambda button_state: handle_blue_down_1(dc)
 
     # TODO: 5. Create remote control objects for channels 2, 3, and 4. Add lambda callbacks for on_red_up to each one:
     #   Channel 2's .on_red_up should call handle_red_up_2 (that exist already) with state and dc as parameters
     #   Channel 3's .on_red_up should call handle_red_up_3 (that exist already) with state and dc as parameters
     #   Channel 4's .on_red_up should call handle_red_up_4 (that exist already) with state and dc as parameters
+    channel2 = ev3.RemoteControl
+    channel2.on_red_up = lambda button_state: handle_red_up_2(dc)
+    channel2.on_red_down = lambda button_state: handle_red_down_2(dc)
+    channel2.on_blue_up = lambda button_state: handle_blue_up_2(dc)
+    channel2.on_blue_down = lambda button_state: handle_blue_down_2(dc)
+
+    channel3 = ev3.RemoteControl
+    channel3.on_red_up = lambda button_state: handle_red_up_3(dc)
+    channel3.on_red_down = lambda button_state: handle_red_down_3(dc)
+    channel3.on_blue_up = lambda button_state: handle_blue_up_3(dc)
+    channel3.on_blue_down = lambda button_state: handle_blue_down_3(dc)
+
+    channel4 = ev3.RemoteControl
+    channel4.on_red_up = lambda button_state: handle_red_up_4(dc)
+    channel4.on_red_down = lambda button_state: handle_red_down_4(dc)
+    channel4.on_blue_up = lambda button_state: handle_blue_up_4(dc)
+    channel4.on_blue_down = lambda button_state: handle_blue_down_4(dc)
 
     # Buttons on EV3
     btn = ev3.Button()
