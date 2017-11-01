@@ -73,7 +73,7 @@ def main():
     rc1.on_red_up = lambda state: left_wheel_forwards(state, robot)
     rc1.on_red_down = lambda state: left_wheel_backwards(state, robot)
     rc1.on_blue_up = lambda state: right_wheel_forwards(state, robot)
-    rc1.on_blue_down = lambda state: right_wheel_forwards(state, robot)
+    rc1.on_blue_down = lambda state: right_wheel_backwards(state, robot)
 
     rc2 = ev3.RemoteControl(channel=2)
     rc2.on_red_up = lambda state: handle_arm_up_button(state, robot)
@@ -100,7 +100,8 @@ def main():
     # been tested and shown to work, then have that person commit their work.  All other team members need to do a
     # VCS --> Update project...
     # Once the library is implemented any team member should be able to run his code as stated in todo3.
-    robot.shutdown()
+    #robot.shutdown()
+    robot.shutdown = lambda state: handle_shutdown(dc)
 
 # ----------------------------------------------------------------------
 # Event handlers
