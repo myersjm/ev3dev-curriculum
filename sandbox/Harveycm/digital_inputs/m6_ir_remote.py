@@ -127,6 +127,7 @@ def left_wheel_backwards(button_state, robot):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
         robot.left_motor.stop()
 
+
 def right_wheel_forwards(button_state, robot):
     if button_state:
          ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
@@ -134,6 +135,7 @@ def right_wheel_forwards(button_state, robot):
     else:
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
         robot.right_motor.stop()
+
 
 def right_wheel_backwards(button_state, robot):
     if button_state:
