@@ -4,7 +4,7 @@ Time to move your arm movement functions into your Snatch3r robot library.
 
 This module will work exactly the same as the prior module but will do that work via your robot library.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
+Authors: David Fisher and Jessica Myers.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # TODO: 2. Have everyone talk about this problem together then pick one team member to modify libs/robot_controller.py
