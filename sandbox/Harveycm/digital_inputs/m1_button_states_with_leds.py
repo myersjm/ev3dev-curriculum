@@ -50,6 +50,7 @@ def main():
                   # ev3.Leds.ORANGE,  # Too close to another color in my opinion
                   # ev3.Leds.YELLOW,  # Too close to another color in my opinion
                   ev3.Leds.AMBER]
+    wait_until
 
     current_color_index = 0
     while True:
@@ -88,7 +89,7 @@ def main():
         #   Press Down - Both LEDs are Amber (try holding the button down for a few seconds when you to the press)
         #   Press Down - Both LEDs are off
         #   Press Down - Both LEDs are Green
-        #   Press Down - Both LEDs are Red (the cycle repeats)
+        #   Press Down -     Both LEDs are Red (the cycle repeats)
         #   Press Back - Both LEDs turn Green, the robot says Goodbye and the program exits
 
         # TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
