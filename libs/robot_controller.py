@@ -98,4 +98,5 @@ class Snatch3r(object):
         ev3.Sound.beep()
         self.arm_motor.position = 0
 
+    def forward(self):
 
