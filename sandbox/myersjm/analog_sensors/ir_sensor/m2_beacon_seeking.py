@@ -96,9 +96,11 @@ def seek_beacon(robot):
                 # Close enough of a heading to move forward
                 print("On the right heading. Distance: ", current_distance)
                 # You add more!
-                if current_distance < 5:
+                if current_distance == 1:
+                    robot.forward(forward_speed, forward_speed)
+                    time.sleep(.5)
                     return True
-                elif current_distance > 5:
+                elif current_distance > 1:
                     robot.forward(forward_speed, forward_speed)
             elif math.fabs(current_heading) < 10:
                 if current_heading < 0:
