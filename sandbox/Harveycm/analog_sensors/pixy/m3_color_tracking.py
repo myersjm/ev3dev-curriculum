@@ -43,7 +43,7 @@ def main():
             robot.left(600, 600)
         elif robot.pixy.value(1) > 170:
             robot.right(600, 600)
-        elif robot.pixy.value(1) > 150 and robot.pixy.value(1) < 170:
+        else: #robot.pixy.value(1) > 150 and robot.pixy.value(1) < 170:
             robot.stop()
 
         time.sleep(0.25)
