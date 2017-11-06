@@ -95,7 +95,7 @@ def seek_beacon(robot):
                 # Close enough of a heading to move forward
                 print("On the right heading. Distance: ", current_distance)
                 # You add more!
-
+                if current_distance
 
 
 
