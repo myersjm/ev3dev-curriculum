@@ -92,7 +92,7 @@ def drive_to_color(button_state, robot, color_to_seek):
         while color_to_seek != color_sensor:
             robot.left_motor.run_forever()
             robot.right_motor.run_forever()
-            if color_to_seek == color_sensor:
+            if color_to_seek == color_sensor: 
                 break
                 ev3.Sound.speak("Seeking " + COLOR_NAMES[color_to_seek]).wait()
 
