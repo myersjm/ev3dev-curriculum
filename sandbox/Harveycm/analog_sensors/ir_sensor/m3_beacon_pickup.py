@@ -39,6 +39,7 @@ def main():
     #####################################################
 
     robot = robo.Snatch3r()
+
     try:
         while True:
             found_beacon = robot.seek_beacon()

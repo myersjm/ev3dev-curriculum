@@ -46,31 +46,52 @@ import time
 # Here is some code that will likely be VERY useful in that method to convert the led_side_string and led_color_string
 #   into a useful led_side and led_color values that can be used with the ev3.Leds.set_color method.
 #
-#     print("Received: {} {}".format(led_side_string, led_color_string))
-#     led_side = None
-#     if led_side_string == "left":
-#         led_side = ev3.Leds.LEFT
-#     elif led_side_string == "right":
-#         led_side = ev3.Leds.RIGHT
-#
-#     led_color = None
-#     if led_color_string == "green":
-#         led_color = ev3.Leds.GREEN
-#     elif led_color_string == "red":
-#         led_color = ev3.Leds.RED
-#     elif led_color_string == "black":
-#         led_color = ev3.Leds.BLACK
-#
-#     if led_side is None or led_color is None:
-#         print("Invalid parameters sent to set_led. led_side_string = {} led_color_string = {}".format(
-#             led_side_string, led_color_string))
-#     else:
-#         ev3.Leds.set_color(led_side, led_color)
+    print("Received: {} {}".format(led_side_string, led_color_string))
+    led_side = None
+    if led_side_string == "left":
+        led_side = ev3.Leds.LEFT
+    elif led_side_string == "right":
+        led_side = ev3.Leds.RIGHT
+
+    led_color = None
+    if led_color_string == "green":
+        led_color = ev3.Leds.GREEN
+    elif led_color_string == "red":
+        led_color = ev3.Leds.RED
+    elif led_color_string == "black":
+        led_color = ev3.Leds.BLACK
+
+    if led_side is None or led_color is None:
+        print("Invalid parameters sent to set_led. led_side_string = {} led_color_string = {}".format(
+            led_side_string, led_color_string))
+    else:
+        ev3.Leds.set_color(led_side, led_color)
 
 class MyDelegate(object):
 
     def __init__(self):
-        self.running = True
+            self.running = True
+
+        print("Received: {} {}".format(led_side_string, led_color_string))
+        led_side = None
+        if led_side_string == "left":
+            led_side = ev3.Leds.LEFT
+        elif led_side_string == "right":
+            led_side = ev3.Leds.RIGHT
+
+        led_color = None
+        if led_color_string == "green":
+            led_color = ev3.Leds.GREEN
+        elif led_color_string == "red":
+            led_color = ev3.Leds.RED
+        elif led_color_string == "black":
+            led_color = ev3.Leds.BLACK
+
+        if led_side is None or led_color is None:
+            print("Invalid parameters sent to set_led. led_side_string = {} led_color_string = {}".format(
+                led_side_string, led_color_string))
+        else:
+            ev3.Leds.set_color(led_side, led_color)
 
 
 def main():

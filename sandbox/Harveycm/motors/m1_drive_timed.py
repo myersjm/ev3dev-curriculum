@@ -75,7 +75,7 @@ Authors: David Fisher and Casey Harvey.
 # TODO: 5. Write the code necessary to make the robot drive at that speed going roughly that distance.
 #   Note, in this module, you are REQUIRED to use the pattern...
 #      run_forever()
-#      time.sleep(some_amount) 
+#      time.sleep(some_amount)
 #      stop()
 #   You may NOT use the advanced motor commands at this time like: run_to_abs_pos, run_to_rel_pos, or run_timed.
 # TODO: 6. Modify the program so that it will exit immediately if the answer to   any   question is 0.
