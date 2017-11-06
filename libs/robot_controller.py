@@ -125,4 +125,43 @@ class Snatch3r(object):
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=-right_speed)
 
+    def seek_beacon(self):
+        forward_speed = 300
+        turn_speed = 100
+        while not self.touch_sensor.is_pressed:
+            # The touch sensor can be used to abort the attempt (sometimes handy during testing)
+
+            # DONE: 3. Use the beacon_seeker object to get the current heading and distance.
+            current_heading = self.beacon_seeker.heading  # use the beacon_seeker heading
+            current_distance = self.beacon_seeker.distance  # use the beacon_seeker distance
+            print("Adjusting heading: ", current_heading)
+            if current_distance == -128:
+                # If the IR Remote is not found just sit idle for this program until it is moved.
+                print("IR Remote not found. Distance is -128")
+                self.left(forward_speed, forward_speed)
+            else:
+                if math.fabs(current_heading) < 2:
+                    # Close enough of a heading to move forward
+                    print("On the right heading. Distance: ", current_distance)
+                    # You add more!
+                    if current_distance < 5:
+                        return True
+                    elif current_distance > 5:
+                        self.forward(forward_speed, forward_speed)
+                elif math.fabs(current_heading) < 10:
+                    if current_heading < 0:
+                        self.left(turn_speed, turn_speed)
+                    elif current_heading > 0:
+                        self.right(turn_speed, turn_speed)
+                elif math.fabs(current_heading) > 10:
+                    print("Heading too far off.", current_heading)
+                    self.left(forward_speed, forward_speed)
+
+            time.sleep(0.2)
+
+        # The touch_sensor was pressed to abort the attempt if this code runs.
+        print("Abandon ship!")
+        self.stop()
+        return False
+
 
