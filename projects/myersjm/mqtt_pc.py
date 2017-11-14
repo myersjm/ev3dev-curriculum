@@ -13,12 +13,15 @@ from tkinter import ttk
 import library as robo
 import mqtt_remote_method_calls as com
 
+global break_check
 
 def main():
     print("Running...")
 
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
+
+    #robot = robo.Snatch3r()
 
     # root = tkinter.Tk()
     # root.title("MQTT Remote")
@@ -95,9 +98,9 @@ def main():
     button1.grid(row=1, column=1)
     button1['command'] = lambda: follow_me(mqtt_client)
 
-    button2 = ttk.Button(frame, text="Stop it.")
+    button2 = ttk.Button(frame, text="Pet Me!")
     button2.grid(row=2, column=1)
-    button2['command'] = lambda: stop_following_me(mqtt_client)
+    button2['command'] = lambda: pet_me(mqtt_client)
 
     q_button = ttk.Button(frame, text="Quit")
     q_button.grid(row=3, column=1)
@@ -106,6 +109,15 @@ def main():
     e_button = ttk.Button(frame, text="Exit")
     e_button.grid(row=4, column=1)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
+    #
+    # new = ttk.Button(frame, text="New")
+    # new.grid(row=5, column=1)
+    # new['command'] = (lambda: follow_me_2(mqtt_client, robot, root, frame))
+    #
+    # extra = ttk.Button(frame, text="STOP NOW")
+    # extra.grid(row=5, column=1)
+    # extra['command'] = (lambda: check(mqtt_client))
+
     #
     # button2 = ttk.Button(frame, text="Go, enter name..")
     # button2.grid(row=0, column=0)
@@ -128,12 +140,40 @@ def quit_program(mqtt_client, shutdown_ev3):
 
 
 def follow_me(mqtt_client):
-    mqtt_client.send_message("following_mode")
+    mqtt_client.send_message("old_following_mode")
 
 
-def stop_following_me(mqtt_client):
+def pet_me(mqtt_client):
     mqtt_client.send_message("stop")
 
+# def follow_me_2(mqtt_client, robot, root, frame):
+#     print("--------------------------------------------")
+#     print(" Following ")
+#     print("--------------------------------------------")
+#     ev3.Sound.speak("I will follow you.").wait()
+#     print("Press the touch sensor to exit this program.")  # CHANGE TO REMOTE
+#
+#     robot.pixy.mode = "SIG1"
+#     turn_speed = 300
+#     x_values = [0, 0]
+#     direction = 0
+#
+#     status = False
+#
+#     while not robot.touch_sensor.is_pressed:
+#         robot.following_mode(turn_speed, x_values, direction)
+#         status = check_state()
+#         if status == True:
+#             break
+#     print("I will stop following you.")
+#     robot.stop()
+#     ev3.Sound.speak("I will stop following you.").wait()
+#
+# def check(mqtt_client):
+#     break_check == True
+#
+# def check_state():
+#     return break_check
 #------------------------------------------------------------------------------------------------------
 # Pixy Following Mode
 #------------------------------------------------------------------------------------------------------

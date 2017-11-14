@@ -13,7 +13,7 @@ class Snatch3r(object):
         self.ir_sensor = ev3.InfraredSensor()
         self.pixy = ev3.Sensor(driver_name="pixy-lego")
         self.beacon_seeker = ev3.BeaconSeeker(channel=1)
-        self.keep_going = self.touch_sensor.is_pressed
+        #  self.keep_going = self.touch_sensor.is_pressed
         self.break_out = False
 
         assert self.pixy
@@ -159,7 +159,7 @@ class Snatch3r(object):
         return False
 
 
-    def following_mode(self):
+    def old_following_mode(self):
         print("--------------------------------------------")
         print(" Following ")
         print("--------------------------------------------")
@@ -172,7 +172,7 @@ class Snatch3r(object):
         direction = 0
 
         while not self.touch_sensor.is_pressed:
-            if self.break_out == True:
+            if self.ir_sensor.proximity < 10: #self.break_out == True:
                 break
 
             # DONE: 2. Read the Pixy values for x and y
@@ -191,6 +191,7 @@ class Snatch3r(object):
                     while self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
                         self.forward(600, 600)
                         time.sleep(.01)
+                        ev3.Sound.play("DOGBARK.wav")
                         del x_values[0]
                         x_values.append(pixy_x)
                         if x_values[1] > x_values[0]:
@@ -228,3 +229,57 @@ class Snatch3r(object):
 
     def shutdown(self):
         self.break_out = True
+
+    def following_mode(self, turn_speed, x_values, direction):
+        print("value1: X", self.pixy.value(1))
+        pixy_x = self.pixy.value(1)
+
+        if self.pixy.value(1) > 0:
+            if self.pixy.value(1) < 130:  # 130, 190
+                self.left(turn_speed, turn_speed)
+            elif self.pixy.value(1) > 190:
+                self.right(turn_speed, turn_speed)
+            elif self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
+                self.stop()
+                time.sleep(.01)
+                while self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
+                    self.forward(600, 600)
+                    time.sleep(.01)
+                    del x_values[0]
+                    x_values.append(pixy_x)
+                    if x_values[1] > x_values[0]:
+                        direction = 2  # right
+                    if x_values[1] < x_values[0]:
+                        direction = 1  # left
+                        # you want it to keep oging while directin is true because when it starts circling it stores
+                        # new values and that messes it up maybe. keep going as long as it is true because if see go straight
+
+        else:
+            # if x_values[1] > x_values[0]:
+            #     while robot.pixy.value(1) < 0:
+            #         robot.right(turn_speed, turn_speed)
+            #         time.sleep(.5)
+            # if x_values[1] < x_values[0]:
+            #     while robot.pixy.value(1) < 0:
+            #         robot.left(turn_speed, turn_speed)
+            #         time.sleep(.5)
+            if direction == 2:
+                self.right(turn_speed, turn_speed)
+            if direction == 1:
+                self.left(turn_speed, turn_speed)
+            else:
+                self.left(turn_speed, turn_speed)
+
+        time.sleep(0.25)
+
+    def petting_mode(self):
+        print("--------------------------------------------")
+        print(" Pet Me Mode")
+        print("--------------------------------------------")
+        ev3.Sound.speak("Bark. Bark. Pet me.").wait()
+        print("Pet Robo-Dog by pressing: ")
+        print("Up, Down, Left, and Right buttons.")
+        print("See which button he likes petted the best based on his barks!")
+
+        print("--------------------------------------------")
+        print("To exit, press the back button on Robo-Dog.")
