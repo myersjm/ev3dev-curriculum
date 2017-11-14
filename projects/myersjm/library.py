@@ -1,6 +1,7 @@
 import ev3dev.ev3 as ev3
 import math
 import time
+import traceback
 
 
 class Snatch3r(object):
@@ -158,8 +159,10 @@ class Snatch3r(object):
         self.stop()
         return False
 
-
-    def old_following_mode(self):
+    # ------------------------------------------------------------------------------------------------------
+    # Pixy Following Mode
+    # ------------------------------------------------------------------------------------------------------
+    def following_mode(self):
         print("--------------------------------------------")
         print(" Following ")
         print("--------------------------------------------")
@@ -230,47 +233,6 @@ class Snatch3r(object):
     def shutdown(self):
         self.break_out = True
 
-    def following_mode(self, turn_speed, x_values, direction):
-        print("value1: X", self.pixy.value(1))
-        pixy_x = self.pixy.value(1)
-
-        if self.pixy.value(1) > 0:
-            if self.pixy.value(1) < 130:  # 130, 190
-                self.left(turn_speed, turn_speed)
-            elif self.pixy.value(1) > 190:
-                self.right(turn_speed, turn_speed)
-            elif self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
-                self.stop()
-                time.sleep(.01)
-                while self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
-                    self.forward(600, 600)
-                    time.sleep(.01)
-                    del x_values[0]
-                    x_values.append(pixy_x)
-                    if x_values[1] > x_values[0]:
-                        direction = 2  # right
-                    if x_values[1] < x_values[0]:
-                        direction = 1  # left
-                        # you want it to keep oging while directin is true because when it starts circling it stores
-                        # new values and that messes it up maybe. keep going as long as it is true because if see go straight
-
-        else:
-            # if x_values[1] > x_values[0]:
-            #     while robot.pixy.value(1) < 0:
-            #         robot.right(turn_speed, turn_speed)
-            #         time.sleep(.5)
-            # if x_values[1] < x_values[0]:
-            #     while robot.pixy.value(1) < 0:
-            #         robot.left(turn_speed, turn_speed)
-            #         time.sleep(.5)
-            if direction == 2:
-                self.right(turn_speed, turn_speed)
-            if direction == 1:
-                self.left(turn_speed, turn_speed)
-            else:
-                self.left(turn_speed, turn_speed)
-
-        time.sleep(0.25)
 
     def petting_mode(self):
         print("--------------------------------------------")
@@ -346,3 +308,72 @@ class Snatch3r(object):
 
     def introduce(self):
         ev3.Sound.speak("Hello I am Robo Dog").wait()
+
+    def fetch(self):
+        print("--------------------------------------------")
+        print(" Fetch Beacon")
+        print("--------------------------------------------")
+        ev3.Sound.speak("Woof. Woof. I will fetch the beacon.").wait()
+
+        try:
+            while True:
+                found_beacon = self.seek_beacon()
+                if found_beacon:
+                    ev3.Sound.speak("I got the beacon")
+                    self.arm_up()
+                    time.sleep(1)
+                    self.shortened_following()
+                    self.arm_down()
+                command = input("Hit enter to throw the ball again or enter q to quit: ")
+                if command == "q":
+                    break
+        except:
+            traceback.print_exc()
+            ev3.Sound.speak("Error")
+
+        print("Thanks for playing!")
+        ev3.Sound.speak("Thanks for playing!").wait()
+
+    def shortened_following(self):
+        self.pixy.mode = "SIG1"
+        turn_speed = 300
+        x_values = [0, 0]
+        direction = 0
+        timeout = time.time() + 5
+        while True:
+            if time.time() > timeout:
+                break
+            print("value1: X", self.pixy.value(1))
+            pixy_x = self.pixy.value(1)
+
+            if self.pixy.value(1) > 0:
+                if self.pixy.value(1) < 130:  # 130, 190
+                    self.left(turn_speed, turn_speed)
+                elif self.pixy.value(1) > 190:
+                    self.right(turn_speed, turn_speed)
+                elif self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
+                    self.stop()
+                    time.sleep(.01)
+                    while self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
+                        self.forward(600, 600)
+                        time.sleep(.01)
+                        del x_values[0]
+                        x_values.append(pixy_x)
+                        if x_values[1] > x_values[0]:
+                            direction = 2  # right
+                        if x_values[1] < x_values[0]:
+                            direction = 1  # left
+
+            else:
+                if direction == 2:
+                    self.right(turn_speed, turn_speed)
+                if direction == 1:
+                    self.left(turn_speed, turn_speed)
+                else:
+                    self.left(turn_speed, turn_speed)
+
+            time.sleep(0.25)
+
+        print("Found you.")
+        self.stop()
+        ev3.Sound.speak("Found you. I got the ball for you. I'm a good dog.").wait()

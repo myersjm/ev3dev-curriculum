@@ -77,5 +77,214 @@ def following_mode():
     ev3.Sound.speak("Cannot compute! Cannot compute! Slow down human!").wait()
 
 
+# ------------------------------------------------------------------------------------------------------
+    # REMOTE CONTROL -- button for follow me mode, stop following me mode, status? say something mode
+    # ------------------------------------------------------------------------------------------------------
+    # class DataContainer(object):
+    #     """ Helper class that might be useful to communicate between different callbacks."""
+    #
+    #     def __init__(self):
+    #         self.running = True
+    #
+    # print("--------------------------------------------")
+    # print("IR Remote")
+    # print(" - Use IR remote channel 1.")
+    # print(" - Press red up to start following")
+    # print(" - Press red down to STOP following")
+    # print(" - Press blue up for dog to bark")
+    # print("--------------------------------------------")
+    #
+    # ev3.Leds.all_off()  # Turn the leds off
+    # robot = robo.Snatch3r()
+    # dc = DataContainer()
+    # left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    # right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    # assert left_motor.connected
+    # assert right_motor.connected
+    #
+    # rc1 = ev3.RemoteControl(channel=1)
+    # rc1.on_red_up = lambda state: follow_me(state, robot)  # FOllow me
+    # rc1.on_red_down = lambda state: stop_following(state, robot)  # Stop following me
+    # rc1.on_blue_up = lambda state: bark(state, robot)  # Say something
+    #
+    # btn = ev3.Button()
+    # btn.on_backspace = lambda state: handle_shutdown(state, dc)
+    #
+    # while dc.running:
+    #     # Process the RemoteControl objects.
+    #     rc1.process()
+    #     btn.process()
+    #     time.sleep(0.01)
+    #
+    # robot.shutdown = lambda state: handle_shutdown(dc)
+
+
+# def follow_me_2(mqtt_client, robot, root, frame):
+#     print("--------------------------------------------")
+#     print(" Following ")
+#     print("--------------------------------------------")
+#     ev3.Sound.speak("I will follow you.").wait()
+#     print("Press the touch sensor to exit this program.")  # CHANGE TO REMOTE
+#
+#     robot.pixy.mode = "SIG1"
+#     turn_speed = 300
+#     x_values = [0, 0]
+#     direction = 0
+#
+#     status = False
+#
+#     while not robot.touch_sensor.is_pressed:
+#         robot.following_mode(turn_speed, x_values, direction)
+#         status = check_state()
+#         if status == True:
+#             break
+#     print("I will stop following you.")
+#     robot.stop()
+#     ev3.Sound.speak("I will stop following you.").wait()
+#
+# def check(mqtt_client):
+#     break_check == True
+#
+# def check_state():
+#     return break_check
+
+
+
+# def follow_me(button_state, robot):
+#     if button_state:
+#         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+#         robot.keep_going = robot.touch_sensor.is_pressed
+#         following_mode()
+#
+#
+# def stop_following(button_state, robot):
+#     if button_state:
+#         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+#         robot.keep_going = False
+#
+#
+# def bark(button_state, robot):
+#     if button_state:
+#         ev3.Sound.play("Dog-barking-short.wav")
+#
+#
+# def handle_shutdown(button_state, dc):
+#     """
+#     Exit the program.
+#
+#     Type hints:
+#       :type button_state: bool
+#       :type dc: DataContainer
+#     """
+#     if button_state:
+#         dc.running = False
+
+
+
+def following_mode():
+    print("--------------------------------------------")
+    print(" Following ")
+    print("--------------------------------------------")
+    ev3.Sound.speak("I will follow you.").wait()
+    print("Press the touch sensor to exit this program.")  # CHANGE TO REMOTE
+
+    robot = robo.Snatch3r()
+    robot.pixy.mode = "SIG1"
+    turn_speed = 300
+    x_values = [0, 0]
+    direction = 0
+
+    while not robot.keep_going:          #not robot.touch_sensor.is_pressed:
+
+        # DONE: 2. Read the Pixy values for x and y
+        # Print the values for x and y
+        print("value1: X", robot.pixy.value(1))
+        pixy_x = robot.pixy.value(1)
+
+        if robot.pixy.value(1) > 0:
+            if robot.pixy.value(1) < 130:  # 130, 190
+                robot.left(turn_speed, turn_speed)
+            elif robot.pixy.value(1) > 190:
+                robot.right(turn_speed, turn_speed)
+            elif robot.pixy.value(1) >= 130 and robot.pixy.value(1) <= 190:
+                robot.stop()
+                time.sleep(.01)
+                while robot.pixy.value(1) >= 130 and robot.pixy.value(1) <= 190:
+                    robot.forward(600, 600)
+                    time.sleep(.01)
+                    del x_values[0]
+                    x_values.append(pixy_x)
+                    if x_values[1] > x_values[0]:
+                        direction = 2  # right
+                    if x_values[1] < x_values[0]:
+                        direction = 1  # left
+                        # you want it to keep oging while directin is true because when it starts circling it stores
+                        # new values and that messes it up maybe. keep going as long as it is true because if see go straight
+
+        else:
+            # if x_values[1] > x_values[0]:
+            #     while robot.pixy.value(1) < 0:
+            #         robot.right(turn_speed, turn_speed)
+            #         time.sleep(.5)
+            # if x_values[1] < x_values[0]:
+            #     while robot.pixy.value(1) < 0:
+            #         robot.left(turn_speed, turn_speed)
+            #         time.sleep(.5)
+            if direction == 2:
+                robot.right(turn_speed, turn_speed)
+            if direction == 1:
+                robot.left(turn_speed, turn_speed)
+            else:
+                robot.left(turn_speed, turn_speed)
+
+        time.sleep(0.25)
+
+    print("Cannot compute! Cannot compute! Human is too fast!")
+    robot.stop()
+    ev3.Sound.speak("Cannot compute! Cannot compute! Slow down human!").wait()
+
+
+#Library code
+    # def following_mode(self, turn_speed, x_values, direction):
+    #     print("value1: X", self.pixy.value(1))
+    #     pixy_x = self.pixy.value(1)
+    #
+    #     if self.pixy.value(1) > 0:
+    #         if self.pixy.value(1) < 130:  # 130, 190
+    #             self.left(turn_speed, turn_speed)
+    #         elif self.pixy.value(1) > 190:
+    #             self.right(turn_speed, turn_speed)
+    #         elif self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
+    #             self.stop()
+    #             time.sleep(.01)
+    #             while self.pixy.value(1) >= 130 and self.pixy.value(1) <= 190:
+    #                 self.forward(600, 600)
+    #                 time.sleep(.01)
+    #                 del x_values[0]
+    #                 x_values.append(pixy_x)
+    #                 if x_values[1] > x_values[0]:
+    #                     direction = 2  # right
+    #                 if x_values[1] < x_values[0]:
+    #                     direction = 1  # left
+    #                     # you want it to keep oging while directin is true because when it starts circling it stores
+    #                     # new values and that messes it up maybe. keep going as long as it is true because if see go straight
+    #
+    #     else:
+    #         # if x_values[1] > x_values[0]:
+    #         #     while robot.pixy.value(1) < 0:
+    #         #         robot.right(turn_speed, turn_speed)
+    #         #         time.sleep(.5)
+    #         # if x_values[1] < x_values[0]:
+    #         #     while robot.pixy.value(1) < 0:
+    #         #         robot.left(turn_speed, turn_speed)
+    #         #         time.sleep(.5)
+    #         if direction == 2:
+    #             self.right(turn_speed, turn_speed)
+    #         if direction == 1:
+    #             self.left(turn_speed, turn_speed)
+    #         else:
+    #             self.left(turn_speed, turn_speed)
+    #
+    #     time.sleep(0.25)
 #---------------------
 main()
