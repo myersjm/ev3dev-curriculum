@@ -89,6 +89,7 @@ def main():
     # TKinter Interface GUI ## To mirror the REMOTE
     #------------------------------------------------------------------------------------------------------
     root = tkinter.Tk()
+    root.title("Robo-Dog")
     root.minsize(width=300, height=400)
 
     frame = ttk.Frame(root, padding=10)
@@ -118,17 +119,22 @@ def main():
     intro_button.grid(row=0, column=1)
     intro_button['command'] = lambda: intro(mqtt_client)
 
+    intro_label = ttk.Label(frame, text="See what Robo-Dog has to say.", font=("Helvetica", 12))
+    intro_label.grid(row=0, column=2)
+
     button1 = ttk.Button(frame, text="Follow Me!")
     button1.grid(row=1, column=1)
     button1['command'] = lambda: follow_me(mqtt_client)
+
+    button1_label = ttk.Label(frame, text="Have Robo-Dog follow you around!", font=("Helvetica", 12))
+    button1_label.grid(row=1, column=2)
 
     button2 = ttk.Button(frame, text="Pet Me!")
     button2.grid(row=2, column=1)
     button2['command'] = lambda: pet_me(mqtt_client)
 
-    q_button = ttk.Button(frame, text="Quit")
-    q_button.grid(row=3, column=1)
-    q_button['command'] = (lambda: quit_program(mqtt_client, False))
+    intro_label = ttk.Label(frame, text="Pet Robo-Dog for various reactions.", font=("Helvetica", 12))
+    intro_label.grid(row=2, column=2)
 
     e_button = ttk.Button(frame, text="Exit")
     e_button.grid(row=4, column=1)
