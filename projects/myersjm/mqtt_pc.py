@@ -89,10 +89,34 @@ def main():
     # TKinter Interface GUI ## To mirror the REMOTE
     #------------------------------------------------------------------------------------------------------
     root = tkinter.Tk()
+    root.minsize(width=300, height=400)
+
     frame = ttk.Frame(root, padding=10)
-    frame.grid()
+    frame.grid(row=1, column=1)
+
+    root.grid_columnconfigure(0, minsize=100)
+    root.grid_columnconfigure(2, minsize=100)
+    root.grid_rowconfigure(0, minsize=100)
+    root.grid_rowconfigure(2, minsize=100)
 
     root.configure(bg="turquoise")
+
+    title_label = ttk.Label(root, text="Robo-Dog", font=("Helvetica", 30))
+    title_label.grid(row=0, column=1)
+
+    description_label = ttk.Label(root, text="Meet Robo-Dog, the most on-demand, interactive dog you will"
+                                             " ever play with!", font=("Helvetica", 15))
+    description_label.grid(row=2, column=1)
+
+    fine_print = ttk.Label(root, text="Jessica Myers", font=("Helvetica", 10))
+    fine_print.grid(row=5, column=1)
+
+    fine_print2 = ttk.Label(root, text="Robo-Dog Inc.", font=("Helvetica", 10))
+    fine_print2.grid(row=6, column=1)
+
+    intro_button = ttk.Button(frame, text="Introduction")
+    intro_button.grid(row=0, column=1)
+    intro_button['command'] = lambda: intro(mqtt_client)
 
     button1 = ttk.Button(frame, text="Follow Me!")
     button1.grid(row=1, column=1)
@@ -144,7 +168,10 @@ def follow_me(mqtt_client):
 
 
 def pet_me(mqtt_client):
-    mqtt_client.send_message("stop")
+    mqtt_client.send_message("petting_mode")
+
+def intro(mqtt_client):
+    mqtt_client.send_message("introduce")
 
 # def follow_me_2(mqtt_client, robot, root, frame):
 #     print("--------------------------------------------")

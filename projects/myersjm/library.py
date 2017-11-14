@@ -276,10 +276,73 @@ class Snatch3r(object):
         print("--------------------------------------------")
         print(" Pet Me Mode")
         print("--------------------------------------------")
-        ev3.Sound.speak("Bark. Bark. Pet me.").wait()
+        ev3.Sound.speak("Bark!").wait()
+        ev3.Sound.speak("I like it when my buttons are petted.").wait()
         print("Pet Robo-Dog by pressing: ")
         print("Up, Down, Left, and Right buttons.")
         print("See which button he likes petted the best based on his barks!")
 
         print("--------------------------------------------")
         print("To exit, press the back button on Robo-Dog.")
+
+        class DataContainer(object):
+            def __init__(self):
+                self.running = True
+
+        dc = DataContainer()
+
+        btn = ev3.Button()
+
+        btn.on_up = self.handle_up_button
+        btn.on_down = self.handle_down_button
+        btn.on_left = self.handle_left_button
+        btn.on_right = self.handle_right_button
+
+        btn.on_backspace = lambda button_state: self.handle_shutdown(button_state, dc)
+
+        while dc.running:
+            btn.process()  # This command is VERY important when using button callbacks!
+            time.sleep(0.01)  # A short delay is important to allow other things to happen.
+
+        ev3.Sound.speak("Bark").wait()
+
+    def handle_left_button(self, button_state):
+        """Handle IR / button event."""
+        if button_state:
+            print("Left button is pressed")
+            ev3.Sound.speak("Bark!").wait()
+        else:
+            print("Left button was released")
+
+    def handle_right_button(self, button_state):
+        """Handle IR / button event."""
+        if button_state:
+            print("Right button is pressed")
+            ev3.Sound.play("Agressive Bark.wav").wait()
+            time.sleep(2)
+        else:
+            print("Right button was released")
+
+    def handle_up_button(self, button_state):
+        if button_state:
+            print("Up button is pressed")
+            ev3.Sound.play("Longer Whining Bark.wav").wait()
+            time.sleep(2)
+        else:
+            print("Up button was released")
+
+    def handle_down_button(self, button_state):
+        if button_state:
+            print("Down button is pressed")
+            ev3.Sound.play("Whimpering Bark.wav").wait()
+            time.sleep(2)
+        else:
+            print("Down button was released")
+
+    def handle_shutdown(self, button_state, dc):
+        if button_state:
+            print("back")
+            dc.running = False
+
+    def introduce(self):
+        ev3.Sound.speak("Hello I am Robo Dog").wait()
