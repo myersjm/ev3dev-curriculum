@@ -1,8 +1,9 @@
 """
 Jessica Myers
 CSSE120 Robot Final Project
-'Follow Me'
+'Robo-Dog'
 8 November 2017
+Project Files: myersjm_ev3, mqtt_pc, and library, as well as assorted sounds
 """
 
 import ev3dev.ev3 as ev3
@@ -14,6 +15,7 @@ import library as robo
 import mqtt_remote_method_calls as com
 
 global break_check
+
 
 def main():
     print("Running...")
@@ -76,6 +78,9 @@ def main():
     fetch_button.grid(row=4, column=1)
     fetch_button['command'] = lambda: fetch_ball(mqtt_client)
 
+    fetch_label = ttk.Label(frame, text="Have Robo-Dog fetch.", font=("Helvetica", 12))
+    fetch_label.grid(row=4, column=2)
+
     e_button = ttk.Button(frame, text="Exit")
     e_button.grid(row=5, column=1)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
@@ -98,11 +103,14 @@ def follow_me(mqtt_client):
 def pet_me(mqtt_client):
     mqtt_client.send_message("petting_mode")
 
+
 def intro(mqtt_client):
     mqtt_client.send_message("introduce")
 
+
 def fetch_ball(mqtt_client):
     mqtt_client.send_message("fetch")
+
 
 # ----------------------------------------------------------------------
 main()

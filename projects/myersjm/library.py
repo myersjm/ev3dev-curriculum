@@ -201,8 +201,6 @@ class Snatch3r(object):
                             direction = 2  # right
                         if x_values[1] < x_values[0]:
                             direction = 1  # left
-                            # you want it to keep oging while directin is true because when it starts circling it stores
-                            # new values and that messes it up maybe. keep going as long as it is true because if see go straight
 
             else:
                 # if x_values[1] > x_values[0]:
